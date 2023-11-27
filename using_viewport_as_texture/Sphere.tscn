@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void fragment() {
+    COLOR = vec4(UV.x, UV.y, 0.5, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=4]
+resource_local_to_scene = true
+albedo_texture = SubResource( 3 )
+
+[sub_resource type="SphereMesh" id=5]
+
+[node name="Sphere" type="Node"]
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 64, 64 )
+hdr = false
+disable_3d = true
+usage = 0
+
+[node name="ColorRect" type="ColorRect" parent="Viewport"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+material_override = SubResource( 4 )
+mesh = SubResource( 5 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49861, 1.49665, 0 )
